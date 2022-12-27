@@ -1,5 +1,6 @@
 package com.visa.getlocalappsize;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -43,22 +44,21 @@ public class MainActivity extends Activity implements AppInfoCallbackListener{
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < myAppInfos.size(); i++) {
-            sb.append(myAppInfos.get(i).appName + "\r\n\t\t" + myAppInfos.get(i).packageName + "\r\n\t\t\t\t" + myAppInfos.get(i).appSize+ "\r\n");
+            sb.append(myAppInfos.get(i).appName).append("\r\n\t\t").append(myAppInfos.get(i).packageName).append("\r\n\t\t\t\t").append(myAppInfos.get(i).appSize).append("\r\n");
             sb.append("============" + "\r\n");
         }
         tv.setText(sb.toString());
     }
 
+    @SuppressLint("NonConstantResourceId")
     public void Click(View view) {
-        switch (view.getId()) {
-            case R.id.btn_getSize:
-                if (commonUtils.isGetAccess(this)) {
-                    commonUtils.GetInstallAppInfo(this);
-                }else {
-                    Toast.makeText(this, "请授权", Toast.LENGTH_SHORT).show();
-                    commonUtils.getApplicationSizeAccess(this);
-                }
-                break;
+        if (view.getId() == R.id.btn_getSize) {
+            if (CommonUtils.isGetAccess(this)) {
+                commonUtils.GetInstallAppInfo(this);
+            } else {
+                Toast.makeText(this, "请授权", Toast.LENGTH_SHORT).show();
+                commonUtils.getApplicationSizeAccess(this);
+            }
         }
     }
 }

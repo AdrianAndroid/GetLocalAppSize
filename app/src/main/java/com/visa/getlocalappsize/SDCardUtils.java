@@ -1,5 +1,6 @@
 package com.visa.getlocalappsize;
 
+import android.annotation.SuppressLint;
 import android.os.Environment;
 import android.os.StatFs;
 import java.io.File;
@@ -32,13 +33,14 @@ public class SDCardUtils
      * @return
      * SD卡存在返回大小；SD卡不存在返回-1
      */
+    @SuppressLint("ObsoleteSdkInt")
     public static long getSDCardSize(){
         if (isSDCardEnable()) {
             StatFs statFs = new StatFs(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator);
             if (android.os.Build.VERSION.SDK_INT < 18) {
                 int blockSize = statFs.getBlockSize();
                 int blockCount = statFs.getBlockCount();
-                return blockSize * blockCount;
+                return (long) blockSize * blockCount;
             } else {
                 long blockSize = statFs.getBlockSizeLong();
                 long blockCount = statFs.getBlockCountLong();
@@ -53,13 +55,14 @@ public class SDCardUtils
      * @return
      * SD卡存在返回大小；SD卡不存在返回-1
      */
+    @SuppressLint("ObsoleteSdkInt")
     public static long getSDCardAvailableSize(){
         if (isSDCardEnable()) {
             StatFs statFs = new StatFs(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator);
             if (android.os.Build.VERSION.SDK_INT < 18) {
                 int blockSize = statFs.getBlockSize();
                 int blockCount = statFs.getAvailableBlocks();
-                return blockSize * blockCount;
+                return (long) blockSize * blockCount;
             } else {
                 long blockSize = statFs.getBlockSizeLong();
                 long blockCount = statFs.getAvailableBlocksLong();
